@@ -1,0 +1,17 @@
+.search-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    background-image: url(../../assets/search.svg);
+    background-position: 15px;
+    background-repeat: no-repeat;
+    padding-left: 3.5em;
+    width: 90%;
+    font-size: .75em;
+    height: 48px;
+    border: 1px solid #CCCCCC;
+    border-radius: 30px;
+    outline: none;
+}

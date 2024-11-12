@@ -1,0 +1,87 @@
+.card {
+    display: grid;
+    grid-template-areas:
+        "text text image"
+        "text text image"
+        "text text image";
+    user-select: none;
+    cursor: pointer;
+    align-items: center;
+    height: 150px;
+    border-radius: 15px;
+}
+
+.card-types--container {
+    display: flex;
+    gap: 1em;
+}
+
+.card-image--container {
+    grid-area: image;
+    position: relative;
+    width: 165px;
+    height: 150px;
+    justify-self: end;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-icon {
+    position: absolute;
+    width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.card-image {
+    position: sticky;
+    z-index: 1;
+    width: 100%;
+}
+
+.card-text--container {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 0 1em;
+}
+
+.card-pokemon-name {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.card-id {
+    font-weight: 700;
+    color: #333333;
+}
+
+.card-type--item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    gap: 10px;
+    padding: .2em .5em .2em .2em;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.card-type-name {
+    font-size: 1em;
+}
+
+.card-type-icon--container {
+    background-color: #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
