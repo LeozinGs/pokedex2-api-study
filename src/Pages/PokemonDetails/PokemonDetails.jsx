@@ -49,13 +49,45 @@ const PokemonDetails = () => {
     const [pokemon, setPokemon] = useState(null);
     const [sound, setSound] = useState(null);
     const [pokeId, setPokeId] = useState(id);
+    const [description, setDescription] = useState('');
+
+    // useEffect(() => {
+    //     Axios.get(`${POKEMON_API_URL}/${pokeId}`).then((res) => {
+    //         setPokemon(res.data);
+    //         if (res.data.cries && res.data.cries.latest) {
+    //             setSound(res.data.cries.latest); // Define 'sound' apenas se estiver presente
+    //         }
+    //     });
+    // }, [pokeId]);
 
     useEffect(() => {
-        Axios.get(`${POKEMON_API_URL}/${pokeId}`).then((res) => {
-            setPokemon(res.data);
-            setSound(res.data.cries.latest);
-        });
-    }, [pokeId]);
+        // Realizar as duas requisições em paralelo
+        const fetchPokemonData = async () => {
+            try {
+                const pokemonResponse = await Axios.get(`${POKEMON_API_URL}/${id}`);
+                const speciesResponse = await Axios.get(`${POKEMON_API_URL}-species/${id}`);
+
+                // Atualizar os estados com os dados das duas requisições
+                setPokemon(pokemonResponse.data);
+                setSound(pokemonResponse.data.cries?.latest || null); // Define o som, se disponível
+                setDescription(speciesResponse.data.flavor_text_entries[15].flavor_text); // Pega a descrição
+
+            } catch (error) {
+                console.error("Erro ao buscar os dados do Pokémon:", error);
+            }
+        };
+
+        fetchPokemonData();
+    }, [id]);
+
+    const playAudio = () => {
+        if (sound) { // Garante que 'sound' está definido antes de criar o áudio
+            const audio = new Audio(sound);
+            audio.volume = 0.1;
+            audio.play();
+        }
+    };
+
 
     const caseType = () => {
         switch (pokemonType()) {
@@ -311,12 +343,6 @@ const PokemonDetails = () => {
         return cm / 10;
     }
 
-    const audio = new Audio(sound);
-    const playAudio = () => {
-        audio.play();
-        audio.volume = 0.02;
-    }
-
     const incrementId = () => {
         if (pokeId >= 1025) {
             return
@@ -367,7 +393,7 @@ const PokemonDetails = () => {
                         </div>
                     </div>
                     <div className="details-description--container">
-
+                        <p className='description-text'>{description}</p>
                     </div>
                     <div className="details-stats--container">
                         <div className='stats-item'>
