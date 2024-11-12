@@ -318,11 +318,19 @@ const PokemonDetails = () => {
     }
 
     const incrementId = () => {
-        setPokeId(parseInt(pokeId) + 1);
+        if (pokeId >= 1025) {
+            return
+        } else {
+            setPokeId(parseInt(pokeId) + 1);
+        }
     }
 
     const decrementId = () => {
-        setPokeId(parseInt(pokeId) - 1);
+        if (pokeId <= 1) {
+            return
+        } else {
+            setPokeId(parseInt(pokeId) - 1);
+        }
     }
 
     return (
@@ -330,6 +338,14 @@ const PokemonDetails = () => {
             {pokemon ? (
                 <>
                     <div className='details-image--container'>
+                        <div className="arrow-container">
+                            <div onClick={() => decrementId()} className='arrow-div' style={{ textDecoration: 'none' }}>
+                                <i className='material-icons arrow'>arrow_left</i>
+                            </div>
+                            <div onClick={() => incrementId()} className='arrow-div' style={{ textDecoration: 'none' }}>
+                                <i className='material-icons arrow'>arrow_right</i>
+                            </div>
+                        </div>
                         <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, #fff 100%)` }}>
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />
                         </div>
@@ -364,7 +380,7 @@ const PokemonDetails = () => {
                         </div>
                         <div className='stats-item'>
                             <p className='stats-item-title'><i className="material-icons icon" >ballot</i>ABILITY</p>
-                            <p className='stats-item-text'>{firstUpperCase(pokemon.abilities[0].ability.name)}</p>
+                            <p className='stats-item-text' style={{ fontSize: '.95em' }}>{firstUpperCase(pokemon.abilities[0].ability.name)}</p>
                         </div>
                         <div className='stats-item'>
                             <p className='stats-item-title'><i className="material-icons icon" >volume_up</i>CRIES</p>

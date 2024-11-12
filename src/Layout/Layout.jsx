@@ -1,3 +1,4 @@
+import Navbar from '../Components/Navbar/Navbar';
 import './styles.css'
 import { Outlet } from "react-router-dom";
 
@@ -5,8 +6,9 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
     return (
         <>
-            <main>
+            <main className='main'>
                 <Outlet />
+                <Navbar />
             </main>
         </>
     );
