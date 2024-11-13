@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import Intro from './Components/Intro/Intro';
 import TransitionPage from './Components/TransitionPage/TransitionPage';
 import PokemonDetails from './Pages/PokemonDetails/PokemonDetails';
+import Regions from './Pages/Regions/Regions';
+import Favorites from './Pages/Favorites/Favorites';
 
 function App() {
 
@@ -38,6 +40,8 @@ function App() {
               <Route element={<Layout />}>
                 <Route path='/' element={<Home />} />
                 <Route path='/pokemon/:id' element={<PokemonDetails />} />
+                <Route path='/regions' element={<Regions />} />
+                <Route path='/favorites' element={<Favorites />} />
               </Route>
             </Routes>
           </Router>

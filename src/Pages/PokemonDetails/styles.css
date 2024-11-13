@@ -128,8 +128,8 @@
 }
 
 .arrow {
-    font-size: 3em;
-    color: var(--clr-grey);
+    font-size: 2em;
+    color: var(--clr-light-grey);
     display: flex;
     justify-content: center;
     align-items: center;

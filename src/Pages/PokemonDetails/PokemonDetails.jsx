@@ -1,5 +1,5 @@
 import './styles.css';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { POKEMON_API_URL } from '../../Config';
@@ -48,17 +48,7 @@ const PokemonDetails = () => {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState(null);
     const [sound, setSound] = useState(null);
-    const [pokeId, setPokeId] = useState(id);
     const [description, setDescription] = useState('');
-
-    // useEffect(() => {
-    //     Axios.get(`${POKEMON_API_URL}/${pokeId}`).then((res) => {
-    //         setPokemon(res.data);
-    //         if (res.data.cries && res.data.cries.latest) {
-    //             setSound(res.data.cries.latest); // Define 'sound' apenas se estiver presente
-    //         }
-    //     });
-    // }, [pokeId]);
 
     useEffect(() => {
         // Realizar as duas requisições em paralelo
@@ -67,10 +57,9 @@ const PokemonDetails = () => {
                 const pokemonResponse = await Axios.get(`${POKEMON_API_URL}/${id}`);
                 const speciesResponse = await Axios.get(`${POKEMON_API_URL}-species/${id}`);
 
-                // Atualizar os estados com os dados das duas requisições
                 setPokemon(pokemonResponse.data);
-                setSound(pokemonResponse.data.cries?.latest || null); // Define o som, se disponível
-                setDescription(speciesResponse.data.flavor_text_entries[15].flavor_text); // Pega a descrição
+                setSound(pokemonResponse.data.cries?.latest || null);
+                setDescription(speciesResponse.data.flavor_text_entries[17].flavor_text);
 
             } catch (error) {
                 console.error("Erro ao buscar os dados do Pokémon:", error);
@@ -81,7 +70,7 @@ const PokemonDetails = () => {
     }, [id]);
 
     const playAudio = () => {
-        if (sound) { // Garante que 'sound' está definido antes de criar o áudio
+        if (sound) {
             const audio = new Audio(sound);
             audio.volume = 0.1;
             audio.play();
@@ -343,34 +332,15 @@ const PokemonDetails = () => {
         return cm / 10;
     }
 
-    const incrementId = () => {
-        if (pokeId >= 1025) {
-            return
-        } else {
-            setPokeId(parseInt(pokeId) + 1);
-        }
-    }
-
-    const decrementId = () => {
-        if (pokeId <= 1) {
-            return
-        } else {
-            setPokeId(parseInt(pokeId) - 1);
-        }
-    }
-
     return (
         <div className='details-container'>
             {pokemon ? (
                 <>
                     <div className='details-image--container'>
                         <div className="arrow-container">
-                            <div onClick={() => decrementId()} className='arrow-div' style={{ textDecoration: 'none' }}>
-                                <i className='material-icons arrow'>arrow_left</i>
-                            </div>
-                            <div onClick={() => incrementId()} className='arrow-div' style={{ textDecoration: 'none' }}>
-                                <i className='material-icons arrow'>arrow_right</i>
-                            </div>
+                            <Link to={'/'} style={{ textDecoration: 'none' }}>
+                                <i className='material-icons arrow'>arrow_back_ios</i>
+                            </Link>
                         </div>
                         <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, #fff 100%)` }}>
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />
