@@ -52,7 +52,7 @@
 }
 
 .card-pokemon-name {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 500;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .card-type-name {
-    font-size: .80em;
+    font-size: .70em;
 }
 
 .card-type-icon--container {
@@ -85,4 +85,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.card-wrapper {
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 9;
 }

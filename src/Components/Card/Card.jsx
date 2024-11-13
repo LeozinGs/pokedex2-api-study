@@ -4,6 +4,9 @@ import Axios from 'axios';
 import { POKEMON_API_URL } from '../../Config';
 import Loading from '../Loading/Loading';
 
+import favoriteIcon from './assets/favorites-icon.svg';
+import favoriteIconActive from './assets/favorites-active-icon.svg';
+
 import bugIcon from '../../assets/icons/bug-big.svg';
 import darkIcon from '../../assets/icons/dark-big.svg';
 import dragonIcon from '../../assets/icons/dragon-big.svg';
@@ -43,7 +46,7 @@ import steelIconSmall from '../../assets/iconsSmall/steel-icon-small.svg';
 import waterIconSmall from '../../assets/iconsSmall/water-icon-small.svg';
 import { Link } from 'react-router-dom';
 
-const Card = ({ id, image, name }) => {
+const Card = ({ id, image, name, isFavorite, onToggleFavorite }) => {
 
     const [pokemonCard, setPokemonCard] = useState(null);
 
@@ -295,39 +298,42 @@ const Card = ({ id, image, name }) => {
     }
 
     return (
-        <Link
-            to={`/pokemon/${id}`}
-            style={{ textDecoration: 'none', color: '#000' }}
-        >
-            {pokemonCard ?
-                <div key={id} className='card' style={{ background: `var(--clr-${caseColor2(pokemonType)}-light)` }}>
-                    <div className="card-text--container">
-                        <p className='card-id'>Nº{String(id).padStart(4, '0')}</p>
-                        <h3 className='card-pokemon-name'>{firstLetterUpperCase(name)}</h3>
-                        <div className="card-types--container">
-                            {pokemonCard.types.map((type) => {
-                                return <span key={Math.random() * 10000} className='card-type--item' style={{ background: `var(--clr-${caseColor(type.type.name)})` }}>
-                                    <div className="card-type-icon--container">
-                                        <img src={caseTypeSmall(type.type.name)} alt={`${type.type.name} icon small`} />
-                                    </div>
-                                    <p className='card-type-name'>{firstLetterUpperCase(type.type.name)}</p>
-                                </span>
-                            })
-                            }
+        <div className='card-wrapper'>
+            <img src={isFavorite ? favoriteIconActive : favoriteIcon} alt="Favorite icon" className={`favorite-btn ${isFavorite ? 'favorited' : ''}`} onClick={onToggleFavorite} />
+            <Link
+                to={`/pokemon/${id}`}
+                style={{ textDecoration: 'none', color: '#000' }}
+            >
+                {pokemonCard ?
+                    <div key={id} className='card' style={{ background: `var(--clr-${caseColor2(pokemonType)}-light)` }}>
+                        <div className="card-text--container">
+                            <p className='card-id'>Nº{String(id).padStart(4, '0')}</p>
+                            <h3 className='card-pokemon-name'>{firstLetterUpperCase(name)}</h3>
+                            <div className="card-types--container">
+                                {pokemonCard.types.map((type) => {
+                                    return <span key={Math.random() * 10000} className='card-type--item' style={{ background: `var(--clr-${caseColor(type.type.name)})` }}>
+                                        <div className="card-type-icon--container">
+                                            <img src={caseTypeSmall(type.type.name)} alt={`${type.type.name} icon small`} />
+                                        </div>
+                                        <p className='card-type-name'>{firstLetterUpperCase(type.type.name)}</p>
+                                    </span>
+                                })
+                                }
+                            </div>
+                        </div>
+                        <div className="card-image--container" style={{ background: `var(--clr-${caseColor2(pokemonType)})` }}>
+                            <img className='background-icon' src={caseType(pokemonType)} alt={`${pokemonType} big icon`} />
+                            <img className='card-image' src={image} alt={`${name} image`} />
                         </div>
                     </div>
-                    <div className="card-image--container" style={{ background: `var(--clr-${caseColor2(pokemonType)})` }}>
-                        <img className='background-icon' src={caseType(pokemonType)} alt={`${pokemonType} big icon`} />
-                        <img className='card-image' src={image} alt={`${name} image`} />
-                    </div>
-                </div>
-                :
-                <Loading
-                    size={40}
-                    color={'var(--clr-light-grey)'}
-                />
-            }
-        </Link>
+                    :
+                    <Loading
+                        size={40}
+                        color={'var(--clr-light-grey)'}
+                    />
+                }
+            </Link>
+        </div>
 
     );
 }

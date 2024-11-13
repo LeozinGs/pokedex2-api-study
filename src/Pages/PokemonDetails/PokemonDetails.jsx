@@ -1,5 +1,5 @@
 import './styles.css';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { POKEMON_API_URL } from '../../Config';
@@ -45,6 +45,7 @@ import waterIconSmall from '../../assets/iconsSmall/water-icon-small.svg';
 
 const PokemonDetails = () => {
 
+    const navigate = useNavigate();
     const { id } = useParams();
     const [pokemon, setPokemon] = useState(null);
     const [sound, setSound] = useState(null);
@@ -338,9 +339,12 @@ const PokemonDetails = () => {
                 <>
                     <div className='details-image--container'>
                         <div className="arrow-container">
-                            <Link to={'/'} style={{ textDecoration: 'none' }}>
-                                <i className='material-icons arrow'>arrow_back_ios</i>
-                            </Link>
+                            <i
+                                className='material-icons arrow'
+                                onClick={() => navigate(-1)}
+                            >
+                                arrow_back_ios
+                            </i>
                         </div>
                         <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, #fff 100%)` }}>
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />

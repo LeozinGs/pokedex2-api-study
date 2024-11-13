@@ -2,9 +2,9 @@ import './styles.css';
 
 const Regions = () => {
     return (
-        <>
-            <h1>Regions</h1>
-        </>
+        <div className='regions-container'>
+            Regions
+        </div>
     );
 }
 

@@ -11,6 +11,9 @@ const Home = () => {
     const [filteredPokemonData, setFilteredPokemonData] = useState(null);
     const [visiblePokemonCount, setVisiblePokemonCount] = useState(10); // Mostra 10 Pokémon inicialmente
     const [loadingMore, setLoadingMore] = useState(false);
+    const [favorites, setFavorites] = useState(() => {
+        return JSON.parse(localStorage.getItem("favorites")) || [];
+    });
 
     useEffect(() => {
         Axios.get(POKEMON_API_URL + '?limit=1025')
@@ -68,7 +71,6 @@ const Home = () => {
         }
     };
 
-    // Função para carregar mais Pokémon ao rolar para o fim
     const loadMorePokemon = () => {
         if (loadingMore) return;
         setLoadingMore(true);
@@ -76,7 +78,6 @@ const Home = () => {
         setLoadingMore(false);
     };
 
-    // Monitorar o scroll para carregar mais Pokémon
     useEffect(() => {
         const handleScroll = () => {
             if (
@@ -92,6 +93,18 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadingMore]);
 
+    useEffect(() => {
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }, [favorites]);
+
+    const toggleFavorite = (id) => {
+        setFavorites((prevFavorites) =>
+            prevFavorites.includes(id)
+                ? prevFavorites.filter(favId => favId !== id)
+                : [...prevFavorites, id]
+        );
+    };
+
     return (
         <main className='container'>
             <SearchBar onSearch={handleSearch} />
@@ -103,6 +116,8 @@ const Home = () => {
                             id={pokemon.id}
                             image={pokemon.url}
                             name={pokemon.name}
+                            isFavorite={favorites.includes(pokemon.id)}
+                            onToggleFavorite={() => toggleFavorite(pokemon.id)}
                         />
                     ))
                 ) : (
