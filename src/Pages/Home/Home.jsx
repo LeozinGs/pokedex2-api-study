@@ -62,7 +62,7 @@ const Home = () => {
                     const pokemonByTypeData = pokemonData.filter(pokemon => pokemonByType.includes(pokemon.name));
                     setFilteredPokemonData(pokemonByTypeData);
                 } catch (error) {
-                    console.error(error, "Tipo de Pokémon não encontrado");
+                    console.log(error, "Tipo de Pokémon não encontrado");
                     setFilteredPokemonData([]);
                 }
             } else {
@@ -80,18 +80,25 @@ const Home = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (
-                window.innerHeight + document.documentElement.scrollTop >=
-                document.documentElement.offsetHeight - 100
-            ) {
-                loadMorePokemon();
+            const cardsContainer = document.querySelector('.cards--container');
+            if (!cardsContainer) return;
+
+            const lastVisibleCard = cardsContainer.children[visiblePokemonCount - 1];
+            if (lastVisibleCard) {
+                const lastCardOffset = lastVisibleCard.getBoundingClientRect().bottom;
+                const pageOffset = window.innerHeight + window.scrollY;
+
+                // Carrega mais Pokémon quando a posição do último card visível está perto do final da tela
+                if (pageOffset >= lastCardOffset - 200) {
+                    loadMorePokemon();
+                }
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loadingMore]);
+    }, [loadingMore, visiblePokemonCount]);
 
     useEffect(() => {
         localStorage.setItem("favorites", JSON.stringify(favorites));

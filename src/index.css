@@ -64,6 +64,6 @@ body>* {
     grid-column: 2;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 0px;
-}
+} */

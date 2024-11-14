@@ -28,10 +28,10 @@
 .details-pokemon-image {
     position: absolute;
     z-index: 1;
-    width: 50%;
-    top: 35%;
+    width: 70%;
+    bottom: 0px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(40px);
 }
 
 .details-text--container {
