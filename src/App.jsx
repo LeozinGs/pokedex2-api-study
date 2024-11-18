@@ -8,6 +8,7 @@ import TransitionPage from './Components/TransitionPage/TransitionPage';
 import PokemonDetails from './Pages/PokemonDetails/PokemonDetails';
 import Regions from './Pages/Regions/Regions';
 import Favorites from './Pages/Favorites/Favorites';
+import { FavoritesProvider } from './Config/FavoritesContext';
 
 function App() {
 
@@ -35,16 +36,18 @@ function App() {
         isTransitioning ?
           <TransitionPage />
           :
-          <Router>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path='/' element={<Home />} />
-                <Route path='/pokemon/:id' element={<PokemonDetails />} />
-                <Route path='/regions' element={<Regions />} />
-                <Route path='/favorites' element={<Favorites />} />
-              </Route>
-            </Routes>
-          </Router>
+          <FavoritesProvider>
+            <Router>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/pokemon/:id' element={<PokemonDetails />} />
+                  <Route path='/regions' element={<Regions />} />
+                  <Route path='/favorites' element={<Favorites />} />
+                </Route>
+              </Routes>
+            </Router>
+          </FavoritesProvider>
       }
     </>
   );

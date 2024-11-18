@@ -1,9 +1,10 @@
 import './styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 import { POKEMON_API_URL } from '../../Config';
 import Loading from '../../Components/Loading/Loading';
+import { FavoritesContext } from '../../Config/FavoritesContext';
 
 import bugIcon from '../../assets/icons/bug-big.svg';
 import darkIcon from '../../assets/icons/dark-big.svg';
@@ -43,6 +44,9 @@ import rockIconSmall from '../../assets/iconsSmall/rock-icon-small.svg';
 import steelIconSmall from '../../assets/iconsSmall/steel-icon-small.svg';
 import waterIconSmall from '../../assets/iconsSmall/water-icon-small.svg';
 
+import favoriteIcon from './assets/favorites-icon.svg';
+import favoriteActiveIcon from './assets/favorites-active-icon.svg';
+
 const PokemonDetails = () => {
 
     const navigate = useNavigate();
@@ -50,6 +54,7 @@ const PokemonDetails = () => {
     const [pokemon, setPokemon] = useState(null);
     const [sound, setSound] = useState(null);
     const [description, setDescription] = useState('');
+    const { favorites, toggleFavorite } = useContext(FavoritesContext);
 
     useEffect(() => {
         // Realizar as duas requisições em paralelo
@@ -350,6 +355,9 @@ const PokemonDetails = () => {
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />
                         </div>
                         <img className='details-pokemon-image' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                        <div className="favorite-container">
+                            <img className='favorite-icon' onClick={() => toggleFavorite(pokemon.id)} src={favorites.includes(pokemon.id) ? favoriteActiveIcon : favoriteIcon} alt={'favorite icon'} />
+                        </div>
                     </div>
                     <div className="details-text--container">
                         <h1 className='details-name'>{firstUpperCase(pokemon.name)}</h1>

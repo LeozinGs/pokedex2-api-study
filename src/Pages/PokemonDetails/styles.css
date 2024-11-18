@@ -143,3 +143,19 @@
     font-size: 1.25em;
     font-weight: 500;
 }
+
+.favorite-container {
+    position: absolute;
+    z-index: 10;
+    top: 55px;
+    width: 100%;
+    display: flex;
+    padding: 1em;
+    justify-content: space-between;
+    user-select: none;
+    cursor: pointer;
+}
+
+.favorite-icon {
+    width: 35px;
+}
