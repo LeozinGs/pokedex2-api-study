@@ -20,6 +20,7 @@ const Favorites = () => {
                     .map((pokemon, index) => ({
                         id: index + 1,
                         url: IMAGE_API_URL + (index + 1) + '.png',
+                        sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
                         name: pokemon.name,
                     }))
                     .filter(pokemon => favorites.includes(pokemon.id));
@@ -49,7 +50,7 @@ const Favorites = () => {
                         <Card
                             key={pokemon.id}
                             id={pokemon.id}
-                            image={pokemon.url}
+                            image={pokemon.sprite}
                             name={pokemon.name}
                             isFavorite={true}
                             onToggleFavorite={() => toggleFavorite(pokemon.id)}

@@ -28,7 +28,7 @@
 .details-pokemon-image {
     position: absolute;
     z-index: 1;
-    width: 70%;
+    width: 50%;
     bottom: 0px;
     left: 50%;
     transform: translateX(-50%) translateY(40px);

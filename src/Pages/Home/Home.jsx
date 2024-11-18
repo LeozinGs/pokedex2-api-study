@@ -138,21 +138,19 @@
 
 // export default Home;
 
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import './styles.css';
 import Axios from 'axios';
 import { IMAGE_API_URL, POKEMON_API_URL } from '../../Config';
 import Loading from '../../Components/Loading/Loading';
 import Card from '../../Components/Card/Card';
-import { FavoritesContext } from '../../Config/FavoritesContext';
 
 const Home = () => {
     const [pokemonData, setPokemonData] = useState(null);
     const [filteredPokemonData, setFilteredPokemonData] = useState(null);
     const [visiblePokemon, setVisiblePokemon] = useState([]); // Índices dos Pokémon visíveis
     const [loading, setLoading] = useState(true);
-    const { favorites, toggleFavorite } = useContext(FavoritesContext);
     const observerRef = useRef(null);
 
     useEffect(() => {
@@ -164,6 +162,7 @@ const Home = () => {
                         id: index + 1,
                         url: IMAGE_API_URL + (index + 1) + '.png',
                         name: pokemon.name,
+                        sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
                     }));
                     setPokemonData(newPokemonData);
                     setFilteredPokemonData(newPokemonData);
@@ -235,10 +234,6 @@ const Home = () => {
         setVisiblePokemon([]); // Reinicia os Pokémon visíveis após busca
     };
 
-    useEffect(() => {
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-    }, [favorites]);
-
     return (
         <main className='container'>
             <SearchBar onSearch={handleSearch} />
@@ -255,10 +250,8 @@ const Home = () => {
                             {visiblePokemon.includes(index) ? (
                                 <Card
                                     id={pokemon.id}
-                                    image={pokemon.url}
+                                    image={pokemon.sprite}
                                     name={pokemon.name}
-                                    isFavorite={favorites.includes(pokemon.id)}
-                                    onToggleFavorite={() => toggleFavorite(pokemon.id)}
                                 />
                             ) : (
                                 <div className="card-skeleton">Loading...</div>

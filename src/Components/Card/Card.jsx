@@ -4,9 +4,6 @@ import Axios from 'axios';
 import { POKEMON_API_URL } from '../../Config';
 import Loading from '../Loading/Loading';
 
-import favoriteIcon from './assets/favorites-icon.svg';
-import favoriteIconActive from './assets/favorites-active-icon.svg';
-
 import bugIcon from '../../assets/icons/bug-big.svg';
 import darkIcon from '../../assets/icons/dark-big.svg';
 import dragonIcon from '../../assets/icons/dragon-big.svg';
@@ -46,7 +43,7 @@ import steelIconSmall from '../../assets/iconsSmall/steel-icon-small.svg';
 import waterIconSmall from '../../assets/iconsSmall/water-icon-small.svg';
 import { Link } from 'react-router-dom';
 
-const Card = ({ id, image, name, isFavorite, onToggleFavorite }) => {
+const Card = ({ id, image, name }) => {
 
     const [pokemonCard, setPokemonCard] = useState(null);
 
@@ -299,7 +296,6 @@ const Card = ({ id, image, name, isFavorite, onToggleFavorite }) => {
 
     return (
         <div className='card-wrapper'>
-            <img src={isFavorite ? favoriteIconActive : favoriteIcon} alt="Favorite icon" className={`favorite-btn ${isFavorite ? 'favorited' : ''}`} onClick={onToggleFavorite} />
             <Link
                 to={`/pokemon/${id}`}
                 style={{ textDecoration: 'none', color: '#000' }}
