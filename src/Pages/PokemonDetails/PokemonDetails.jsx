@@ -354,7 +354,7 @@ const PokemonDetails = () => {
                         <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, #fff 100%)` }}>
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />
                         </div>
-                        <img className='details-pokemon-image' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                        <img className='details-pokemon-image' src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${id}.svg`} alt={pokemon.name} />
                         <div className="favorite-container">
                             <img className='favorite-icon' onClick={() => toggleFavorite(pokemon.id)} src={favorites.includes(pokemon.id) ? favoriteActiveIcon : favoriteIcon} alt={'favorite icon'} />
                         </div>

@@ -124,15 +124,15 @@
     padding: 1em;
     justify-content: space-between;
     user-select: none;
-    cursor: pointer;
 }
 
 .arrow {
     font-size: 2em;
-    color: var(--clr-light-grey);
+    color: var(--clr-black);
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .details-description--container {
@@ -153,9 +153,9 @@
     padding: 1em;
     justify-content: space-between;
     user-select: none;
-    cursor: pointer;
 }
 
 .favorite-icon {
     width: 35px;
+    cursor: pointer;
 }
