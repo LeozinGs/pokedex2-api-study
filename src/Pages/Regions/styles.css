@@ -1,7 +1,37 @@
 .regions-container {
+    background-color: #fff;
     height: 100%;
+}
+
+.regions {
+    height: 100%;
+    background-color: #fff;
+    padding: 1em;
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    gap: 20px;
+}
+
+.region-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pokemon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.regions-title {
+    font-weight: 600;
+    color: var(--clr-grey);
+    padding: .5em 1em;
+    border-bottom: 1px solid var(--clr-light-grey);
+    position: sticky;
+    width: 100%;
+    top: 0;
     background-color: #fff;
+    z-index: 10;
 }
