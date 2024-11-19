@@ -129,51 +129,53 @@ const Home = () => {
     };
 
     return (
-        <main className="container">
+        <div className="home-container">
             <h3 className="home-title">PokéDex</h3>
-            <SearchBar onSearch={handleSearch} />
+            <main className="container">
+                <SearchBar onSearch={handleSearch} />
 
-            <div className="filter-container">
-                <select
-                    id="type-filter"
-                    value={selectedType}
-                    onChange={(e) => handleTypeFilter(e.target.value)}
-                    disabled={loadingDetails}
-                >
-                    <option value="">All types</option>
-                    {types.map((type) => (
-                        <option key={type} value={type}>
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                <div className="filter-container">
+                    <select
+                        id="type-filter"
+                        value={selectedType}
+                        onChange={(e) => handleTypeFilter(e.target.value)}
+                        disabled={loadingDetails}
+                    >
+                        <option value="">All types</option>
+                        {types.map((type) => (
+                            <option key={type} value={type}>
+                                {type.charAt(0).toUpperCase() + type.slice(1)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            <div className="cards--container">
-                {loading ? (
-                    <Loading size={65} color={'var(--clr-dark-blue)'} />
-                ) : (
-                    filteredPokemonData.map((pokemon, index) => (
-                        <div
-                            key={pokemon.id}
-                            className="card-placeholder"
-                            data-index={index}
-                        >
-                            {visiblePokemon.includes(index) ? (
-                                <Card
-                                    id={pokemon.id}
-                                    image={pokemon.sprite}
-                                    name={pokemon.name}
-                                />
-                            ) : (
-                                <div className="card-skeleton">Loading...<br /><br /><br /></div>
-                            )}
-                        </div>
-                    ))
-                )}
-                {loadingDetails && <Loading size={40} color={'var(--clr-dark-blue)'} />}
-            </div>
-        </main>
+                <div className="cards--container">
+                    {loading ? (
+                        <Loading size={65} color={'var(--clr-dark-blue)'} />
+                    ) : (
+                        filteredPokemonData.map((pokemon, index) => (
+                            <div
+                                key={pokemon.id}
+                                className="card-placeholder"
+                                data-index={index}
+                            >
+                                {visiblePokemon.includes(index) ? (
+                                    <Card
+                                        id={pokemon.id}
+                                        image={pokemon.sprite}
+                                        name={pokemon.name}
+                                    />
+                                ) : (
+                                    <div className="card-skeleton">Loading...<br /><br /><br /></div>
+                                )}
+                            </div>
+                        ))
+                    )}
+                    {loadingDetails && <Loading size={40} color={'var(--clr-dark-blue)'} />}
+                </div>
+            </main>
+        </div>
     );
 };
 

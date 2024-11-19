@@ -35,4 +35,9 @@
     color: var(--clr-grey);
     padding: .5em 1em;
     border-bottom: 1px solid var(--clr-light-grey);
+    position: sticky;
+    width: 100%;
+    top: 0;
+    background-color: #fff;
+    z-index: 10;
 }
