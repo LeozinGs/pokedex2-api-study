@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
@@ -55,6 +56,44 @@ const PokemonDetails = () => {
     const [sound, setSound] = useState(null);
     const [description, setDescription] = useState('');
     const { favorites, toggleFavorite } = useContext(FavoritesContext);
+    const [weaknesses, setWeaknesses] = useState([]);
+
+    const getTypeWeaknesses = async (types) => {
+        try {
+            const promises = types.map((type) =>
+                Axios.get(`https://pokeapi.co/api/v2/type/${type}`).then((res) => res.data.damage_relations)
+            );
+
+            const [type1Relations, type2Relations] = await Promise.all(promises);
+
+            const damageMultipliers = {};
+
+            const applyMultipliers = (relations, multiplier) => {
+                relations.forEach((type) => {
+                    damageMultipliers[type.name] = (damageMultipliers[type.name] || 1) * multiplier;
+                });
+            };
+
+            applyMultipliers(type1Relations.double_damage_from, 2);
+            applyMultipliers(type1Relations.half_damage_from, 0.5);
+            applyMultipliers(type1Relations.no_damage_from, 0);
+
+            if (type2Relations) {
+                applyMultipliers(type2Relations.double_damage_from, 2);
+                applyMultipliers(type2Relations.half_damage_from, 0.5);
+                applyMultipliers(type2Relations.no_damage_from, 0);
+            }
+
+            const weaknesses = Object.entries(damageMultipliers)
+                .filter(([_, multiplier]) => multiplier > 1)
+                .map(([type, multiplier]) => ({ type, multiplier }));
+
+            return weaknesses;
+        } catch (error) {
+            console.error("Erro ao buscar fraquezas:", error);
+            return [];
+        }
+    };
 
     useEffect(() => {
         // Realizar as duas requisições em paralelo
@@ -67,12 +106,17 @@ const PokemonDetails = () => {
                 setSound(pokemonResponse.data.cries?.latest || null);
                 setDescription(speciesResponse.data.flavor_text_entries[17].flavor_text);
 
+                // Buscar fraquezas
+                const types = pokemonResponse.data.types.map((type) => type.type.name);
+                const weaknessesData = await getTypeWeaknesses(types);
+                setWeaknesses(weaknessesData);
             } catch (error) {
                 console.error("Erro ao buscar os dados do Pokémon:", error);
             }
         };
 
         fetchPokemonData();
+
     }, [id]);
 
     const playAudio = () => {
@@ -423,6 +467,20 @@ const PokemonDetails = () => {
                             <p className='stats-item-text'>{pokemon.stats[5].base_stat}</p>
                         </div>
                     </div>
+                    <hr />
+                    <p className='weaknesses-title' style={{ margin: '1em' }}>Weaknesses:</p>
+                    <div className="weaknesses-list">
+                        {weaknesses.map((weakness) => {
+                            return <div key={weakness.type} className='weaknesses-item' style={{ backgroundColor: `var(--clr-${caseColor(weakness.type)})` }}>
+                                <div className="details-type-icon--container">
+                                    <img src={caseTypeSmall(weakness.type)} alt={`${weakness.type} icon`} />
+                                </div>
+                                <p className='weaknesses-name'>{firstUpperCase(weakness.type)}</p>
+                            </div>
+
+                        })}
+                    </div>
+                    <hr />
                 </>
             ) : (
                 <Loading
