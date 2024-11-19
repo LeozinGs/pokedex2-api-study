@@ -2,63 +2,68 @@ import { useEffect, useState, useRef } from 'react';
 import SearchBar from '../../Components/SearchBar/SearchBar';
 import './styles.css';
 import Axios from 'axios';
-import { IMAGE_API_URL, POKEMON_API_URL } from '../../Config';
+import { POKEMON_API_URL } from '../../Config';
 import Loading from '../../Components/Loading/Loading';
 import Card from '../../Components/Card/Card';
 
 const Home = () => {
-    const [pokemonData, setPokemonData] = useState(null);
-    const [filteredPokemonData, setFilteredPokemonData] = useState(null);
+    const [pokemonData, setPokemonData] = useState([]); // Apenas nome e ID inicialmente
+    const [filteredPokemonData, setFilteredPokemonData] = useState([]);
     const [visiblePokemon, setVisiblePokemon] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingDetails, setLoadingDetails] = useState(false); // Indicador de carregamento de detalhes
     const [types, setTypes] = useState([]);
     const [selectedType, setSelectedType] = useState(
-        () => localStorage.getItem('selectedType') || '' // Restaura do localStorage
+        () => localStorage.getItem('selectedType') || ''
     );
+
     const observerRef = useRef(null);
 
-    const fetchPokemonDetails = async (results) => {
-        const promises = results.map((pokemon) =>
-            Axios.get(pokemon.url).then((res) => {
-                const { id, types } = res.data;
-                return {
-                    id,
-                    name: pokemon.name,
-                    url: IMAGE_API_URL + id + '.png',
-                    sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
-                    types: types.map((typeInfo) => typeInfo.type.name),
-                };
-            })
-        );
-
-        return Promise.all(promises);
-    };
-
     useEffect(() => {
+        // Carrega apenas os nomes e IDs inicialmente
         Axios.get(POKEMON_API_URL + `?limit=1025`)
             .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    const { results } = res.data;
+                const { results } = res.data;
+                const minimalData = results.map((pokemon, index) => ({
+                    id: index + 1,
+                    name: pokemon.name,
+                    sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
+                }));
+                setPokemonData(minimalData);
+                setFilteredPokemonData(minimalData);
+                setLoading(false);
 
-                    fetchPokemonDetails(results).then((detailedPokemonData) => {
-                        setPokemonData(detailedPokemonData);
-                        setFilteredPokemonData(detailedPokemonData);
-
-                        const allTypes = new Set(
-                            detailedPokemonData.flatMap((pokemon) => pokemon.types)
-                        );
-                        setTypes(Array.from(allTypes));
-                        setLoading(false);
-
-                        // Aplica o filtro ao carregar a página se houver um tipo selecionado
-                        if (selectedType) {
-                            handleTypeFilter(selectedType, detailedPokemonData);
-                        }
-                    });
-                }
+                // Carregar tipos de Pokémon uma vez
+                fetchAllTypes(minimalData);
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedType]);
+    }, []);
+
+    const fetchAllTypes = async (data) => {
+        const promises = data.map((pokemon) =>
+            Axios.get(`${POKEMON_API_URL}/${pokemon.id}`).then((res) => ({
+                id: pokemon.id,
+                name: pokemon.name,
+                sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
+                types: res.data.types.map((typeInfo) => typeInfo.type.name),
+            }))
+        );
+
+        setLoadingDetails(true);
+        const detailedData = await Promise.all(promises);
+        setPokemonData(detailedData);
+
+        // Extrai os tipos únicos
+        const allTypes = new Set(detailedData.flatMap((pokemon) => pokemon.types));
+        setTypes(Array.from(allTypes));
+
+        setLoadingDetails(false);
+
+        // Aplica o filtro automaticamente caso haja um tipo salvo
+        if (selectedType) {
+            handleTypeFilter(selectedType, detailedData);
+        }
+    };
 
     useEffect(() => {
         if (!filteredPokemonData) return;
@@ -112,14 +117,14 @@ const Home = () => {
 
     const handleTypeFilter = (type, data = pokemonData) => {
         setSelectedType(type);
-        localStorage.setItem('selectedType', type); // Salva o tipo selecionado no localStorage
+        localStorage.setItem('selectedType', type);
 
         if (!type) {
             setFilteredPokemonData(data);
             return;
         }
 
-        const filteredByType = data.filter((pokemon) => pokemon.types.includes(type));
+        const filteredByType = data.filter((pokemon) => pokemon.types?.includes(type));
         setFilteredPokemonData(filteredByType);
     };
 
@@ -133,6 +138,7 @@ const Home = () => {
                     id="type-filter"
                     value={selectedType}
                     onChange={(e) => handleTypeFilter(e.target.value)}
+                    disabled={loadingDetails}
                 >
                     <option value="">All types</option>
                     {types.map((type) => (
@@ -160,11 +166,12 @@ const Home = () => {
                                     name={pokemon.name}
                                 />
                             ) : (
-                                <div className="card-skeleton">Loading...</div>
+                                <div className="card-skeleton">Loading...<br /><br /><br /></div>
                             )}
                         </div>
                     ))
                 )}
+                {loadingDetails && <Loading size={40} color={'var(--clr-dark-blue)'} />}
             </div>
         </main>
     );
