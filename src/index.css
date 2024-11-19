@@ -25,24 +25,24 @@
     --clr-bug: #91C12F;
     --clr-flying: #89AAE3;
 
-    --clr-water-light: #b2d3f7;
-    --clr-fighting-light: #f3ccd7;
-    --clr-dragon-light: #adcae4;
-    --clr-steel-light: #bce3f3;
-    --clr-electric-light: #eee7c8;
-    --clr-normal-light: #c7d5e0;
-    --clr-fairy-light: #f0cfee;
-    --clr-dark-light: #bfb4d3;
+    --clr-water-light: #cee2f8;
+    --clr-fighting-light: #f7dfe6;
+    --clr-dragon-light: #cadae9;
+    --clr-steel-light: #d0e8f1;
+    --clr-electric-light: #f0ebd7;
+    --clr-normal-light: #d8e1e9;
+    --clr-fairy-light: #f1e3f1;
+    --clr-dark-light: #dbd6e6;
     --clr-ghost-light: #c3cff1;
-    --clr-rock-light: #f3e8c6;
-    --clr-fire-light: #f0d7c6;
-    --clr-psychic-light: #f3c5c8;
+    --clr-rock-light: #f1ecdb;
+    --clr-fire-light: #eeeae7;
+    --clr-psychic-light: #f1dcdd;
     --clr-ice-light: #d2f5f0;
     --clr-ground-light: #ecd3c6;
-    --clr-grass-light: #daeed8;
-    --clr-poison-light: #e9dcee;
-    --clr-bug-light: #e5f0d1;
-    --clr-flying-light: #cad8f0;
+    --clr-grass-light: #ebf3ea;
+    --clr-poison-light: #ebe3ee;
+    --clr-bug-light: #ebf0e1;
+    --clr-flying-light: #e1e7f1;
 }
 
 * {
@@ -64,6 +64,6 @@ body>* {
     grid-column: 2;
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 0px;
-} */
+}

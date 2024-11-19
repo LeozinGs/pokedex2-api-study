@@ -25,3 +25,14 @@
     height: 100%;
     background-color: #fff;
 }
+
+.cards--container {
+    height: 100%;
+}
+
+.favorites-title {
+    font-weight: 600;
+    color: var(--clr-grey);
+    padding: .5em 1em;
+    border-bottom: 1px solid var(--clr-light-grey);
+}

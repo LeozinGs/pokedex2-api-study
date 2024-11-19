@@ -119,10 +119,7 @@
     z-index: 10;
     top: 0;
     left: 0;
-    width: 100%;
-    display: flex;
     padding: 1em;
-    justify-content: space-between;
     user-select: none;
 }
 
@@ -147,11 +144,9 @@
 .favorite-container {
     position: absolute;
     z-index: 10;
-    top: 55px;
-    width: 100%;
-    display: flex;
+    top: 0;
+    right: 0;
     padding: 1em;
-    justify-content: space-between;
     user-select: none;
 }
 

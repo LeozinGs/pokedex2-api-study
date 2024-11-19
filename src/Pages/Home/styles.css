@@ -13,3 +13,23 @@
     flex-direction: column;
     gap: 1em;
 }
+
+.home-title {
+    font-weight: 600;
+    color: var(--clr-grey);
+    padding: .5em 1em;
+}
+
+#type-filter {
+    background-color: var(--clr-grey);
+    color: #fff;
+    width: 156px;
+    border-radius: 49px;
+    font-size: 14;
+    padding: .6em;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    outline: none;
+    margin: 1em 0 0 1.5em;
+}
