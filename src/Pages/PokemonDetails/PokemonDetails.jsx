@@ -395,7 +395,7 @@ const PokemonDetails = () => {
                                 arrow_back_ios
                             </i>
                         </div>
-                        <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, #fff 100%)` }}>
+                        <div className='background-image' style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})`, background: `linear-gradient(145deg, var(--clr-${caseColor2(pokemonType())}) 0%, var(--clr-${caseColor2(pokemonType())}) 50%, #fff 100%)` }}>
                             <img className='details-icon--background' src={caseType(pokemonType())} alt={`${pokemonType()} icon`} />
                         </div>
                         <img className='details-pokemon-image' src={`https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`} alt={pokemon.name} />
