@@ -1,0 +1,39 @@
+.region-button {
+    cursor: pointer;
+    user-select: none;
+    height: 150px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.overlay {
+    background: linear-gradient(149deg, rgba(0, 0, 0, 0.60) 100%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 15px;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        'text image image'
+        'text image image'
+    ;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.region-starters--sprites {
+    grid-area: image;
+    width: 100%;
+}
+
+.region-name {
+    grid-area: text;
+    padding: 1em;
+    font-size: 1.5em;
+}
+
+.region-generation {
+    grid-area: text;
+    padding: 0 1.5em;
+}
