@@ -104,7 +104,7 @@ const PokemonDetails = () => {
 
                 setPokemon(pokemonResponse.data);
                 setSound(pokemonResponse.data.cries?.latest || null);
-                setDescription(speciesResponse.data.flavor_text_entries[17].flavor_text);
+                setDescription(speciesResponse.data.flavor_text_entries[16].flavor_text);
 
                 // Buscar fraquezas
                 const types = pokemonResponse.data.types.map((type) => type.type.name);
