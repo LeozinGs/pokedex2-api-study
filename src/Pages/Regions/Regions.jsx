@@ -120,7 +120,7 @@ const Regions = () => {
                         ))}
                     </div>
                 ) : (
-                    <button onClick={handleBack}>Voltar</button>
+                    <i className='material-icons back-arrow' onClick={handleBack}>arrow_back_ios</i>
                 )}
                 <div className="pokemon-list">
                     {!showButtons &&

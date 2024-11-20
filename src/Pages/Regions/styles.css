@@ -35,3 +35,17 @@
     background-color: #fff;
     z-index: 10;
 }
+
+.back-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--clr-grey);
+    background-color: var(--clr-light-grey);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    padding: .5em .3em .5em .7em;
+    user-select: none;
+    cursor: pointer;
+}
