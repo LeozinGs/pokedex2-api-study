@@ -279,3 +279,10 @@
     height: 20px;
     border-radius: 100%;
 }
+
+.evolution-title,
+.weaknesses-title,
+.stats-title {
+    font-weight: 700;
+    color: var(--clr-grey);
+}
