@@ -27,7 +27,7 @@ const Home = () => {
                 const minimalData = results.map((pokemon, index) => ({
                     id: index + 1,
                     name: pokemon.name,
-                    sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
+                    sprite: `https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/${idUpdater(index + 1)}.png`,
                 }));
                 setPokemonData(minimalData);
                 setFilteredPokemonData(minimalData);
@@ -39,12 +39,16 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const idUpdater = (id) => {
+        return String(id).padStart(3, '0');
+    }
+
     const fetchAllTypes = async (data) => {
         const promises = data.map((pokemon) =>
             Axios.get(`${POKEMON_API_URL}/${pokemon.id}`).then((res) => ({
                 id: pokemon.id,
                 name: pokemon.name,
-                sprite: `https://img.pokemondb.net/artwork/vector/${pokemon.name}.png`,
+                sprite: `https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/${idUpdater(pokemon.id)}.png`,
                 types: res.data.types.map((typeInfo) => typeInfo.type.name),
             }))
         );
