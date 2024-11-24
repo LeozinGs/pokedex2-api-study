@@ -36,6 +36,7 @@ function App() {
         isTransitioning ?
           <TransitionPage />
           :
+
           <FavoritesProvider>
             <Router>
               <Routes>
@@ -48,6 +49,7 @@ function App() {
               </Routes>
             </Router>
           </FavoritesProvider>
+
       }
     </>
   );

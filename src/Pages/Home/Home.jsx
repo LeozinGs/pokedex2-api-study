@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading/Loading';
 import Card from '../../Components/Card/Card';
 
 const Home = () => {
+
     const [pokemonData, setPokemonData] = useState([]); // Apenas nome e ID inicialmente
     const [filteredPokemonData, setFilteredPokemonData] = useState([]);
     const [visiblePokemon, setVisiblePokemon] = useState([]);

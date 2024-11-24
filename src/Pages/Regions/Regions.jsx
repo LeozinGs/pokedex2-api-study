@@ -15,6 +15,7 @@ import alolaImage from './assets/alola-starters.svg';
 import galarImage from './assets/galar-starters.svg';
 
 const Regions = () => {
+
     const [allPokemon, setAllPokemon] = useState([]);
     const [selectedGeneration, setSelectedGeneration] = useState(() => {
         // Inicializa com a geração salva no localStorage ou null
