@@ -539,7 +539,7 @@ const PokemonDetails = () => {
                                                     <div key={evo.id} className='evolution-card'>
                                                         <div className="evolution-image--container" style={{ backgroundColor: `var(--clr-${caseColor2(pokemonType())})` }}>
                                                             <img src={caseType(pokemonType())} alt="" className="evolution-type-background-image" />
-                                                            <img className='evolution-image' src={`https://img.pokemondb.net/artwork/vector/${evo.name}.png`} alt={evo.name} />
+                                                            <img className='evolution-image' src={`https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/${idUpdater(evo.id)}.png`} alt={evo.name} />
                                                         </div>
                                                         <div className="evolution-text-container">
                                                             <p className='evolution-name'>{firstUpperCase(evo.name)}</p>
