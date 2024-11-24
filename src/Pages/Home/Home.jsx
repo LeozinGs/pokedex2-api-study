@@ -21,7 +21,7 @@ const Home = () => {
 
     useEffect(() => {
         // Carrega apenas os nomes e IDs inicialmente
-        Axios.get(POKEMON_API_URL + `?limit=1025`)
+        Axios.get(POKEMON_API_URL + `?limit=893`)
             .then((res) => {
                 const { results } = res.data;
                 const minimalData = results.map((pokemon, index) => ({
